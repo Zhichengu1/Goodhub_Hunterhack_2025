@@ -31,15 +31,12 @@ function App() {
 
   return (
     <div className='layout-a'>
-      <div className='navi-bar'>
-        <div className='header-container'>
-          <div className=''>GoodHub</div>
-          <div className='nav-btn'>
-            <div>Home</div>
-            <div>FindTeam</div>
-            
-          </div>
-          
+      <div class="navi-bar">
+        <div class="title">GoodHub</div>
+        <div class="nav-btn">
+          <div class="nav-item">Home</div>
+          <div class="nav-item">FindTeam</div>
+          <div class="nav-item">Login</div>
         </div>
       </div>
       <div className='flex-container'> 
