@@ -354,14 +354,14 @@ function App() {
         <div id="map"></div>
         <div className="sidebar">
           {/* Search container with results display */}
-            <input 
-              type="text" 
-              className="search-bar" 
-              placeholder="Enter ZIP code or address and press Enter" 
-              value={searchInput}
-              onChange={handleSearchInputChange}
-              onKeyDown={handleSearchKeyDown}
-            />          
+          <input 
+            type="text" 
+            className="search-bar" 
+            placeholder="Enter ZIP code or address and press Enter" 
+            value={searchInput}
+            onChange={handleSearchInputChange}
+            onKeyDown={handleSearchKeyDown}
+          />          
           <div className="category">
             <div className="category-item">Education & Youth</div>
             <div className="category-item">Health & Wellness</div>
@@ -407,10 +407,9 @@ function App() {
                 )}
                 
                 <div className="event-style-circle"></div>
-                <div className="event-description" key={event.id}>
-                  
-                  <div className="event-name" >{event.title}</div>
-                  {event.id === 1 && (
+                <div className="event-description">
+                  <div className="event-name">{event.title}</div>
+                  {event.name && (
                     <Link to="/Profile" className="event-name">{event.name}</Link>
                   )}
                   <div className="event-location">
@@ -423,13 +422,18 @@ function App() {
                     <span className="icon">👥</span> {event.volunteers} volunteers needed
                   </div>
                   <div className="event-category">
-                    <span className="icon">❤️ </span> {event.category}
+                    <span className="icon">❤️</span> {event.category}
                   </div>
                 </div>
-                <button onClick={(e) => {
-                  e.stopPropagation(); // Prevent triggering parent onClick
-                  openViewPopup(event);
-                }}>View</button>
+                <button 
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent triggering parent onClick
+                    openViewPopup(event);
+                  }}
+                  className="view-button"
+                >
+                  View
+                </button>
               </div>
             ))}
           </div>
@@ -588,7 +592,7 @@ function App() {
               )}
               
               <button className="join-button">
-                <Link to="/Team" >Join the Match</Link>
+                <Link to="/Team" style={{ color: 'white', textDecoration: 'none', display: 'block', width: '100%' }}>Join the Match</Link>
               </button>
             </div>
           </div>
