@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Link } from 'react-router-dom';
-
 import './App.css';
 
 function App() {
@@ -220,7 +219,7 @@ function App() {
         <div className="title">GoodHub</div>
         <div className="nav-btn">
           <Link to="/" className="nav-item">Home</Link>
-          <Link to="/Profile" className="nav-item">FindTeam</Link>
+          <Link to="/Team" className="nav-item">FindTeam</Link>
           <div className="nav-item">Login</div>
         </div>
       </div>
