@@ -1,5 +1,4 @@
-// src/App.jsx
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react'; 
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Link } from 'react-router-dom';
@@ -36,6 +35,14 @@ function App() {
     description: ''
   });
   
+  // Search states - MOVED OUTSIDE useEffect
+  const [searchInput, setSearchInput] = useState('');
+  const [searchResults, setSearchResults] = useState(null);
+  
+  // Refs for map and marker
+  const mapRef = useRef(null);
+  const markerRef = useRef(null);
+  
   // Flask backend URL - change this to your actual Flask server URL
   const FLASK_URL = 'http://localhost:5000';
   
@@ -60,6 +67,65 @@ function App() {
       ...formData,
       [field]: value
     });
+  };
+  
+  // Function to handle search input change - MOVED OUTSIDE useEffect
+  const handleSearchInputChange = (e) => {
+    setSearchInput(e.target.value);
+  };
+  
+  // Handle search with keydown event - MOVED OUTSIDE useEffect
+  const handleSearchKeyDown = async (e) => {
+    // Check if the Enter key was pressed
+    if (e.key === 'Enter') {
+      e.preventDefault(); // Prevent default behavior
+      
+      if (!searchInput.trim()) {
+        alert('Please enter an address or ZIP code');
+        return;
+      }
+      
+      try {
+        // Use Nominatim for geocoding (free and open-source)
+        const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchInput)}`);
+        const data = await response.json();
+        
+        if (data && data.length > 0) {
+          const result = data[0];
+          const latitude = parseFloat(result.lat);
+          const longitude = parseFloat(result.lon);
+          
+          setSearchResults({
+            latitude,
+            longitude,
+            displayName: result.display_name
+          });
+          
+          // Center map on the found location
+          if (mapRef.current) {
+            mapRef.current.setView([latitude, longitude], 15);
+            
+            // Remove existing marker if any
+            if (markerRef.current) {
+              markerRef.current.remove();
+            }
+            
+            // Add a marker at the found location
+            markerRef.current = L.marker([latitude, longitude])
+              .addTo(mapRef.current)
+              .bindPopup(`<b>${result.display_name}</b>`)
+              .openPopup();
+          } else {
+            console.error("Map reference is not available");
+          }
+        } else {
+          alert('No results found for the given address');
+        }
+      } catch (error) {
+        console.error('Error geocoding address:', error);
+        alert('Error finding the location. Please try again.');
+      }
+    }
   };
   
   // Function to handle login redirect with current page as return URL
@@ -105,9 +171,6 @@ function App() {
     // Close the popup
     closePopup();
     
-    // Play a success sound
-    playSuccessSound();
-    
     // Reset form data
     setFormData({
       title: '',
@@ -127,16 +190,6 @@ function App() {
       );
       setNewEventId(null);
     }, 5000);
-  };
-  
-  const playSuccessSound = () => {
-    try {
-      const audio = new Audio("https://assets.mixkit.co/active_storage/sfx/2019/09/30/sfx_success_bell_long_68.mp3");
-      audio.volume = 0.3;
-      audio.play();
-    } catch (error) {
-      console.error("Could not play success sound", error);
-    }
   };
   
   const formatDate = (dateString) => {
@@ -170,9 +223,13 @@ function App() {
     return colors[Math.floor(Math.random() * colors.length)];
   };
   
+  // Map initialization effect
   useEffect(() => {
     // Initialize map centered on NYC
     const map = L.map('map', {}).setView([40.7128, -74.0060], 13);
+    
+    // IMPORTANT: Store the map reference
+    mapRef.current = map;
     
     // Add OpenStreetMap tiles
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -211,14 +268,20 @@ function App() {
       <div className='flex-container'> 
         <div id="map"></div>
         <div className="sidebar">
-          <input type="text" className="search-bar" placeholder="Search Bar" />
+          {/* Search container with results display */}
+            <input 
+              type="text" 
+              className="search-bar" 
+              placeholder="Enter ZIP code or address and press Enter" 
+              value={searchInput}
+              onChange={handleSearchInputChange}
+              onKeyDown={handleSearchKeyDown}
+            />          
           <div className="category">
             <div className="category-item">Education & Youth</div>
             <div className="category-item">Health & Wellness</div>
             <div className="category-item">Environment & Conservation</div>
             <div className="category-item">Arts & Culture</div>
-            <div className="category-item">Category</div>
-            <div className="category-item">Category</div>
           </div>
           
           {/* Event List with New Event Animations */}

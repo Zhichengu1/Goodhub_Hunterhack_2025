@@ -796,8 +796,12 @@ a {
 }
 
 /*  ----------------------------------------------------------------  Responsive Design   ------------------------------------------------------------- */
-@media screen and (max-width: 1280px) {
+@media screen and (max-width: 1580px) {
   .navi-bar{
+    height: fit-content;
+  }
+  .event-list-item{
+    width: fit-content;
     height: fit-content;
   }
 }
