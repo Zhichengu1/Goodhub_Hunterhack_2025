@@ -1,6 +1,6 @@
 // App.jsx
 import React, { useState, useEffect } from 'react';
-import './App.css';
+import './team.css';
 
 // Simple cookie helpers
 function setCookie(name, value, days = 7) {
@@ -15,7 +15,7 @@ function getCookie(name) {
   }, '');
 }
 
-export default function App() {
+export default function team() {
   // State for teams list
   const [teams, setTeams] = useState([
     { id: 1, title: 'Group Alpha', description: 'Looking for frontend dev', limit: 4, members: 2, open: false, deadline: '2025-05-05T18:00' },
