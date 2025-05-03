@@ -4,7 +4,7 @@ html, body {
   max-height: 100vh;
   max-width: 100vw;
 }
-/*---------------------------------------------------------------------------- Home Page--------------------*/
+/*---------------------------------------------------------------------------- Home Page ------------------------------------------------------------------------------*/
 .layout-a {
   display: flex;
   flex-direction: column; 
@@ -62,7 +62,7 @@ html, body {
 }
   
 #map {
-  width: 80%;  
+  width: 70%;  
   height: 100%;
   border: 1px solid #ccc;
   touch-action: none;
@@ -72,10 +72,730 @@ html, body {
 .sidebar {
   display: flex;
   flex-direction: column;
-  width: 20%;
+  width: 30%;
+  height: 100%; /* Ensure sidebar takes full height */
   padding: 20px;
-  overflow-y: auto;
+  box-sizing: border-box;
+  overflow-y: hidden; /* Changed from auto to hidden to prevent double scrolling */
 }
+
+.search-bar{
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  margin-bottom: 10px; /* Reduced from 20px */
+  flex-shrink: 0; /* Prevent shrinking */
+}
+
+.category{
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  flex-direction: row;
+  gap: 10px;
+  padding: 6px;
+  border-radius: 5px;
+  margin-bottom: 10px; /* Added margin */
+  flex-shrink: 0; /* Prevent shrinking */
+}
+.category-item{
+  display:flex;
+  background-color:limegreen;
+  font-size: 1em;
+  white-space:nowrap;
+  padding:10px;
+  border-radius: 15px;
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.category-item:hover{
+  transform: scale(1.1);
+  background-color:green;
+  color:white;
+}
+
+.event-list {
+  flex-grow: 1; /* Take up available space */
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px 5px;
+  overflow-y: auto; /* Only the event list should scroll */
+  overflow-x: hidden;
+  height: 0; /* Let flex-grow determine the height */
+}
+
+/* Updated Event List Item Styles */
+.event-list-item {
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+  width: 95%;
+  height: 25%;
+  padding: 15px;
+  border-radius: 12px;
+  background: linear-gradient(145deg, #f8fff8 0%, #ffffff 100%);
+  box-shadow: 0 3px 8px rgba(76, 173, 76, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  border: 1px solid #e5f3e5;
+}
+
+.event-list-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(76, 173, 76, 0.15);
+  border-color: #c1e5c1;
+  background: linear-gradient(145deg, #ffffff 0%, #f8fff8 100%);
+}
+
+/* Enhanced Event Description */
+.event-description {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  gap: 8px;
+  padding-right: 10px;
+}
+
+.event-name {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #2d4d2d;
+  margin-bottom: 4px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.event-location, .event-date, .event-volunteer, .event-category {
+  display: flex;
+  align-items: center;
+  font-size: 0.95rem;
+  color: #557055;
+  gap: 8px;
+}
+
+.icon {
+  color: #4CAD4C;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.event-style-circle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #4CAD4C 0%, #3d9b3d 100%);
+  box-shadow: 0 2px 4px rgba(76, 173, 76, 0.2);
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.event-list-item > button {
+  background: linear-gradient(145deg, #4CAD4C 0%, #3d9b3d 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 6px rgba(76, 173, 76, 0.2);
+  align-self: flex-end;
+  min-width: 80px;
+}
+a {
+  text-decoration: none;
+}
+.event-list-item > button:hover {
+  box-shadow: 0 5px 8px rgba(76, 173, 76, 0.3);
+}
+.event-list-item > button:active {
+  transform: scale(0.98);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.event-list-item {
+  animation: cardEntrance 0.4s ease forwards;
+}
+
+/* ----------------------------- event creation button  -------------------------------- */
+.event-creation {
+  text-align: center;
+  height: 50px; /* Fixed height instead of percentage */
+  border: black solid 1px;
+  color: white;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, #4CAD4C 0%, #3d9b3d 100%);
+  cursor: pointer;
+  transition: background-color 0.2s;
+  flex-shrink: 0; 
+}
+.event-creation:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+.event-creation:active {
+  transform: scale(0.98);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+/*  ----------------------------------------------------------------    Keyframe animation content   ------------------------------------------------------------- */
+.popup-pos {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Add these styles to your App.css */
+
+/* Popup Overlay */
+.popup-pos {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Magical Popup Container */
+.popup {
+  background-color: #E5F5E5; /* Light mint background */
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(76, 173, 76, 0.25);
+  overflow: hidden;
+  width: 1000px;
+  max-height: 700px;
+  display: flex;
+  flex-direction: column;
+  animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 3px solid white;
+}
+
+/* Popup Header with Gradient */
+.popup-header {
+  background: linear-gradient(135deg, #4CAD4C, #7ED957);
+  padding: 20px 30px;
+  color: white;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.8em;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: none;
+}
+
+/* Sparkle container for header */
+.sparkle-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.sparkle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.8);
+  animation: sparkle 2s infinite;
+}
+
+.sparkle.s1 {
+  top: 20%;
+  left: 15%;
+  width: 12px;
+  height: 12px;
+}
+
+.sparkle.s2 {
+  top: 60%;
+  left: 75%;
+  width: 8px;
+  height: 8px;
+  animation-delay: 0.7s;
+}
+
+.sparkle.s3 {
+  top: 30%;
+  left: 90%;
+  width: 10px;
+  height: 10px;
+  animation-delay: 1.5s;
+}
+
+/* Form Styling */
+.magical-form {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  gap: 20px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.form-row {
+  display: flex;
+  gap: 50px;
+  margin-bottom: 20px;
+}
+
+.form-row .form-group {
+  flex: 1;
+  margin-bottom: 0;
+}
+
+.magical-form label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #2C4A2C;
+  font-size: 1.05rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.magical-form input,
+.magical-form textarea,
+.magical-form select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #C1E5C1;
+  border-radius: 12px;
+  font-size: 1rem;
+  background-color: white;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.magical-form input:focus,
+.magical-form textarea:focus,
+.magical-form select:focus {
+  outline: none;
+  border-color: #A367DC; /* Purple accent for focus */
+  box-shadow: 0 0 0 3px rgba(163, 103, 220, 0.2);
+}
+
+.magical-form textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+/* Map Selection Area */
+.map-selection {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #FFF8E6;
+  border-radius: 12px;
+  border-left: 4px solid #FFD166; /* Yellow accent */
+}
+
+.map-hint {
+  margin: 5px 0 0;
+  font-size: 0.9rem;
+  color: #7A6C36;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Form Actions */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  padding: 20px 30px;
+  border-top: 1px solid rgba(76, 173, 76, 0.1);
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+.btn-close {
+  background: linear-gradient(135deg, #A367DC, #9159C8); /* Purple gradient */
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 28px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.btn-close:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(163, 103, 220, 0.3);
+}
+
+.btn-submit {
+  background: linear-gradient(135deg, #4CAD4C, #3D9B3D);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 28px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(76, 173, 76, 0.3);
+}
+
+
+/* New Event Animation Styles */
+.event-list-item.new-event {
+  animation: newEventAnimation 5s ease-in-out;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid #A367DC;
+  box-shadow: 0 8px 20px rgba(163, 103, 220, 0.3);
+}
+
+/* Sparkle effect for new event */
+.event-list-item.new-event::before,
+.event-list-item.new-event::after {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(163, 103, 220, 0.7);
+  animation: eventSparkle 2s infinite;
+  z-index: 2;
+}
+
+.event-list-item.new-event::before {
+  top: 10%;
+  left: 5%;
+}
+
+.event-list-item.new-event::after {
+  bottom: 10%;
+  right: 5%;
+  animation-delay: 0.7s;
+}
+
+
+/* New badge */
+.new-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: linear-gradient(135deg, #FF88BC, #FF6BA8);
+  color: white;
+  font-size: 0.8rem;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 12px;
+  box-shadow: 0 3px 6px rgba(255, 136, 188, 0.3);
+  z-index: 3;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  animation: badgePulse 2s infinite;
+}
+
+/* Celebration confetti */
+.confetti-container {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.confetti {
+  position: absolute;
+  width: 8px;
+  height: 16px;
+  background-image: linear-gradient(135deg, #FFD166, #FF88BC, #A367DC, #4CAD4C);
+  opacity: 0;
+  animation: confettiDrop 3s ease-in-out forwards;
+}
+
+/* Event circle highlight for new events */
+.event-list-item.new-event .event-style-circle {
+  background: linear-gradient(145deg, #A367DC, #9159C8);
+  animation: circleGlow 2s infinite alternate;
+}
+
+/* Replace your current .view-popup CSS with this */
+
+/* First, create an overlay */
+.view-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+/* Then style the popup itself */
+.view-popup {
+  background: linear-gradient(135deg, #293529, #373d34);
+  width: 500px;
+  max-width: 90%;
+  max-height: 80vh;
+  border-radius: 20px;
+  overflow: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  color: white;
+  animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.view-header {
+  padding: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.view-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.view-close {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+.view-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: rotate(90deg);
+}
+
+.view-content {
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.view-detail {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.view-icon {
+  font-size: 1.3rem;
+  min-width: 24px;
+  text-align: center;
+}
+
+.view-text {
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+.view-description {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 15px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.join-button {
+  background: linear-gradient(145deg, #4CAD4C, #3D9B3D);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-top: 15px;
+}
+
+.join-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/*----------------------------------------------------------------    Keyframe animation content   ------------------------------------------------------------- */
+@keyframes confettiDrop {
+  0% {
+    opacity: 1;
+    transform: translateY(-50px) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(50%) rotate(90deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(100%) rotate(180deg);
+  }
+}
+
+@keyframes eventSparkle {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+
+@keyframes badgePulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+
+@keyframes circleGlow {
+  from {
+    box-shadow: 0 0 5px rgba(163, 103, 220, 0.5);
+  }
+  to {
+    box-shadow: 0 0 15px rgba(163, 103, 220, 0.8);
+  }
+}
+
+@keyframes newEventAnimation {
+  0% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  10% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  20% {
+    transform: scale(1.03);
+  }
+  25% {
+    transform: scale(1);
+  }
+  90% {
+    box-shadow: 0 8px 20px rgba(163, 103, 220, 0.3);
+    border-color: #A367DC;
+  }
+  100% {
+    box-shadow: 0 3px 8px rgba(76, 173, 76, 0.1);
+    border-color: #e5f3e5;
+  }
+}
+
+@keyframes cardEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes popIn {
+  0% { 
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  70% {
+    transform: scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes sparkle {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(0);
+    opacity: 0;
+  }
+}
+
+/*  ----------------------------------------------------------------  Responsive Design   ------------------------------------------------------------- */
 @media screen and (max-width: 1280px) {
   .navi-bar{
     height: fit-content;
