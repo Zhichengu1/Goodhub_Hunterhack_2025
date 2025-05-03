@@ -1,3 +1,4 @@
+// src/App.jsx
 import { useEffect, useState } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -35,6 +36,9 @@ function App() {
     description: ''
   });
   
+  // Flask backend URL - change this to your actual Flask server URL
+  const FLASK_URL = 'http://localhost:5000';
+  
   const openPopup = () => setShowPopup(true);
   const closePopup = () => setShowPopup(false);
 
@@ -56,6 +60,14 @@ function App() {
       ...formData,
       [field]: value
     });
+  };
+  
+  // Function to handle login redirect with current page as return URL
+  const handleLoginRedirect = () => {
+    // Get current URL to return to after login
+    const returnUrl = encodeURIComponent(window.location.href);
+    // Redirect to Flask login with return URL as parameter
+    window.location.href = `${FLASK_URL}/?redirect_url=${returnUrl}`;
   };
   
   // Function to handle form submission
@@ -147,35 +159,6 @@ function App() {
     return categories[categoryValue] || categoryValue;
   };
   
-  const createConfetti = () => {
-    const confettiCount = 20;
-    const confettiElements = [];
-    
-    for (let i = 0; i < confettiCount; i++) {
-      // Random confetti properties
-      const left = Math.random() * 100;
-      const delay = Math.random() * 1.5;
-      const size = Math.random() * 6 + 4; // Between 4px and 10px
-      
-      confettiElements.push(
-        <div 
-          key={`confetti-${i}`}
-          className="confetti"
-          style={{
-            left: `${left}%`,
-            animationDelay: `${delay}s`,
-            width: `${size}px`,
-            height: `${size * 2}px`,
-            backgroundColor: getRandomColor()
-          }}
-        ></div>
-      );
-    }
-    
-    return confettiElements;
-  };
-  
-  // Helper function to get random confetti color
   const getRandomColor = () => {
     const colors = [
       '#FFD166', // Yellow
@@ -220,7 +203,8 @@ function App() {
         <div className="nav-btn">
           <Link to="/" className="nav-item">Home</Link>
           <Link to="/Team" className="nav-item">FindTeam</Link>
-          <div className="nav-item">Login</div>
+          {/* Replace static login div with a clickable div that redirects */}
+          <div className="nav-item" onClick={handleLoginRedirect} style={{cursor: 'pointer'}}>Login</div>
         </div>
       </div>
       
