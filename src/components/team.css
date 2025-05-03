@@ -1,360 +1,199 @@
-body {
-  background: linear-gradient(135deg, #11998e, #38ef7d);
+.team-container {
+  margin-left: 25vw;
+  padding-top: 80px; 
+  padding-right: 20px;
+  min-height: 100vh;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: transparent;  
-  box-shadow: none;                                     
-  padding: 16px;
-  color: white;
+.team-calendar-panel {
+  width: 25vw;
+  height: calc(100vh - 70px); 
+  position: fixed;
+  top: 60px;
+  left: 0;
+  background-color: white;
+  overflow-y: auto;
+  padding: 10px;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
 }
 
-.header h1 {
-  margin: 0;
-}
-
-.button {
-  display: inline-flex;
-  align-items: center;
-  padding: 8px 12px;
-  border-radius: 6px;
-  background: linear-gradient(135deg, #117099, #38ef7d);
-  color: #ffffff;
+.react-calendar {
+  width: 100% !important;
+  max-width: 100%;
   border: none;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  cursor: pointer;
-  margin-left: 8px;
+  font-size: 1rem;
 }
 
-.button:hover {
-  background: #11998e;
-  color: #ffffff;
+.team-main-content {
+  display: flex;
+  min-height: calc(100vh - 60px);
 }
 
-.team-list {
-  padding: 30px;
-}
-
-.team-card {
-  position: relative;
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 12px;
+.team-right-panel {
+  flex: 1;
   padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border: 2px solid transparent;
-  border-image: linear-gradient(135deg, #11998e, #38ef7d) 1;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.team-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
-}
-
-.team-card:nth-child(odd) {
-  background: rgba(255, 255, 255, 1);
-}
-
-.team-card .title-row {
+/* ✅ Fixed top navigation bar */
+.team-navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 15px 30px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 1000;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
 }
 
-.teams-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 16px;
-  padding: 16px;
+.team-logo {
+  font-size: 24px;
+  font-weight: bold;
 }
 
-.members {
-  font-size: 0.9em;
-  color: #555;
-  margin-right: 8px;
+.team-nav-buttons button {
+  margin-left: 15px;
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 6px 12px;
+  border-radius: 6px;
+  position: relative;
 }
 
-.deadline {
-  font-size: 0.8em;
-  color: #a00;
-  margin-right: 8px;
+.team-nav-buttons button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
 }
 
-.description {
-  margin-top: 8px;
-  color: #333;
+.team-nav-buttons button:active {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(1px);
 }
 
-.no-results {
-  padding: 16px;
-  color: #555;
+/* Placeholder for calendar (can be replaced with real component) */
+.team-calendar-placeholder {
+  margin: 20px 0;
+  padding: 15px;
+  border: 2px dashed #ccc;
+  text-align: center;
+  font-size: 18px;
+  color: #666;
 }
 
-.modal-backdrop {
+/* Add Event main button */
+.team-add-button {
+  margin: 20px 0;
+  padding: 10px 20px;
+  background: #663399;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* Modal styling */
+.team-modal {
+  background: rgba(0, 0, 0, 0.3);
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.4);
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1010; /* Higher than navbar */
 }
 
-.modal {
+.team-form {
   background: white;
-  padding: 24px;
-  border-radius: 8px;
-  width: 320px;
+  padding: 25px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 400px;
 }
 
-.modal h3 {
-  margin-top: 0;
-}
-
-.modal form input,
-.modal form textarea,
-.modal input {
-  width: 100%;
-  margin-bottom: 12px;
-  padding: 8px;
+.team-form input,
+.team-form textarea {
+  font-size: 1.5em;
+  padding: 12px;
   border: 1px solid #ccc;
   border-radius: 6px;
 }
 
-.label {
-  font-size: 0.9em;
-  margin-bottom: 4px;
-  display: block;
-}
-
-.modal-buttons {
-  text-align: right;
-}
-
-.modal-buttons .button {
-  margin-left: 8px;
-}
-
-.team-card {
-  background: #fff;
-  border-radius: 8px;
-  padding: 16px;
-  margin-bottom: 16px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  overflow: hidden;
-}
-
-.button {
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-.button:hover {
-  background-color: #ddd;      
-  color: #333;                   
-}
-
-.team-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-}
-
-.modal-backdrop {
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.5);
-  backdrop-filter: blur(4px);
+/* Event cards */
+.team-event-list {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: fadeIn 0.3s ease-out;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-.modal {
-  background: #ffffff;
-  border-radius: 16px;
-  padding: 24px;
-  max-width: 400px;
-  width: 90%;
-  box-shadow: 0 12px 24px rgba(0,0,0,0.2);
-  transform: translateY(-20px) scale(0.9);
-  animation: popIn 0.3s ease-out forwards;
-}
-
-@keyframes popIn {
-  to {
-    transform: translateY(0) scale(1);
-  }
-}
-
-.modal input,
-.modal textarea,
-.modal button {
-  transition: box-shadow 0.2s ease, transform 0.2s ease;
-}
-
-.modal input:focus,
-.modal textarea:focus {
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.3);
-  outline: none;
-}
-
-.modal button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-.modal h3 {
-  background: linear-gradient(90deg, #000000, #000000);
-  -webkit-background-clip: text;
-  color: transparent;
-  margin-bottom: 16px;
-  text-align: center;
-}
-
-@keyframes slideIn {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-.team-card {
-  animation: slideIn 0.5s ease-out;
-}
-
-:root {
-  --default-padding: 10px;
-}
-
-.visually-hidden {
-  /* replaces the SCSS mixin */
-  position: absolute !important;
-  clip: rect(1px,1px,1px,1px);
-  overflow: hidden;
-  height: 1px;
-  width: 1px;
-  white-space: nowrap;
-}
-
-.overlay {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(255,255,255,0.1);
-  backdrop-filter: blur(30px);
-  z-index: 1000;
-}
-
-.window {
-  position: fixed;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  min-width: 400px;
-  min-height: 300px;
-  max-width: 600px;
-  max-height: 80vh;
-  border: 5px solid #5e2ae9;
-  box-shadow: 15px 15px 0 #5e2ae9;
-  background-color: #7f00ff;
-  filter: saturate(.1);
-  border-radius: 3px;
-  z-index: 1001;
-}
-
-.window:focus-within { filter: saturate(1); }
-
-.window__title-bar {
-  background-color: #8c5afb;
-  color: white;
-  padding: 13px var(--default-padding);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  user-select: none;
-  box-shadow: 0px 5px 6px -2px #bb99ff5e;
-}
-
-.window__title {
-  font-size: 1rem;
-  font-weight: 500;
-  line-height: 1;
-}
-
-.window__btn {
-  background-color: #5e2ae9;
-  border: none;
-  border-radius: 5px;
-  width: 24px; height: 24px;
-  cursor: pointer;
-  opacity: .8;
-  color: #ae63e4;
-  font-size: 1.2rem;
-  display: flex;
-  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
   justify-content: center;
 }
 
-.window__btn:hover { opacity: 1; }
-
-.window__btn span { /* hide text for screen readers */  
-  /* using our .visually-hidden utility */
-  position: absolute !important;
-  clip: rect(1px,1px,1px,1px);
-  overflow: hidden;
-  height: 1px;
-  width: 1px;
-  white-space: nowrap;
-}
-
-.window__body {
-  flex-grow: 1;
+.team-event-card {
   background: white;
-  padding: var(--default-padding);
-  overflow-y: auto;
+  padding: 20px;
+  border-radius: 10px;
+  width: 250px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.window__status-bar {
-  padding: 3px var(--default-padding);
-  font-size: .75rem;
-  color: #ecd4ff;
+.team-event-card button {
+  margin-top: 10px;
+  padding: 8px 14px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
 }
 
-.visually-hidden {
-  position: absolute !important;
-  clip: rect(1px,1px,1px,1px);
-  overflow: hidden;
-  height: 1px;
-  width: 1px;
-  white-space: nowrap;
+/* Layout: Calendar left, Events right */
+.react-calendar {
+  flex: 1;
+  width: 25%;
+  height: 100%;
 }
 
-.window__body form {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: var(--default-padding);
+/* Highlight days with events in red */
+.team-has-event {
+  background: #ffcccc !important;
+  color: red !important;
+  font-weight: bold;
+  border-radius: 8px;
 }
 
-.window__body form label {
-  display: block;
-  margin-bottom: 0.25rem;
+.team-form-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
 }
 
-.window__body form input,
-.window__body form textarea {
-  width: 100%;
-  box-sizing: border-box;
-  padding: 0.5rem;
+.team-cancel-button {
+  background-color: #ff0303;
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  cursor: pointer;
+}
+
+.team-cancel-button:hover {
+  background-color: #bbb;
+}
+
+.team-calendar-block {
+  flex: 1;
+  height: 50.00%;
+  margin-bottom: 10px;
+}
+
+.team-calendar-block:last-child {
+  margin-bottom: 0;
 }

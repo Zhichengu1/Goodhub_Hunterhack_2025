@@ -8,7 +8,7 @@ function App() {
   // State for new event highlighting
   const [newEventId, setNewEventId] = useState(null);
   
-  // State for events list
+  // State for events list with coordinates
   const [events, setEvents] = useState([
     {
       id: 1,
@@ -18,7 +18,8 @@ function App() {
       date: "May 15, 2025",
       volunteers: 12,
       category: "Education & Youth",
-      isNew: false
+      isNew: false,
+      coordinates: [40.7128, -74.0060] // Default coordinates for initial event
     }
   ]);
   
@@ -35,13 +36,14 @@ function App() {
     description: ''
   });
   
-  // Search states - MOVED OUTSIDE useEffect
+  // Search states
   const [searchInput, setSearchInput] = useState('');
   const [searchResults, setSearchResults] = useState(null);
   
-  // Refs for map and marker
+  // Refs for map and markers
   const mapRef = useRef(null);
   const markerRef = useRef(null);
+  const markersRef = useRef({});
   
   // Flask backend URL - change this to your actual Flask server URL
   const FLASK_URL = 'http://localhost:5000';
@@ -69,12 +71,33 @@ function App() {
     });
   };
   
-  // Function to handle search input change - MOVED OUTSIDE useEffect
+  // Function to handle search input change
   const handleSearchInputChange = (e) => {
     setSearchInput(e.target.value);
   };
   
-  // Handle search with keydown event - MOVED OUTSIDE useEffect
+  // Function to geocode an address and return coordinates
+  const geocodeAddress = async (address) => {
+    try {
+      const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`);
+      const data = await response.json();
+      
+      if (data && data.length > 0) {
+        const result = data[0];
+        return {
+          latitude: parseFloat(result.lat),
+          longitude: parseFloat(result.lon),
+          displayName: result.display_name
+        };
+      }
+      return null;
+    } catch (error) {
+      console.error('Error geocoding address:', error);
+      return null;
+    }
+  };
+  
+  // Handle search with keydown event
   const handleSearchKeyDown = async (e) => {
     // Check if the Enter key was pressed
     if (e.key === 'Enter') {
@@ -85,47 +108,63 @@ function App() {
         return;
       }
       
-      try {
-        // Use Nominatim for geocoding (free and open-source)
-        const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchInput)}`);
-        const data = await response.json();
+      const result = await geocodeAddress(searchInput);
+      
+      if (result) {
+        setSearchResults(result);
         
-        if (data && data.length > 0) {
-          const result = data[0];
-          const latitude = parseFloat(result.lat);
-          const longitude = parseFloat(result.lon);
+        // Center map on the found location
+        if (mapRef.current) {
+          mapRef.current.setView([result.latitude, result.longitude], 15);
           
-          setSearchResults({
-            latitude,
-            longitude,
-            displayName: result.display_name
-          });
-          
-          // Center map on the found location
-          if (mapRef.current) {
-            mapRef.current.setView([latitude, longitude], 15);
-            
-            // Remove existing marker if any
-            if (markerRef.current) {
-              markerRef.current.remove();
-            }
-            
-            // Add a marker at the found location
-            markerRef.current = L.marker([latitude, longitude])
-              .addTo(mapRef.current)
-              .bindPopup(`<b>${result.display_name}</b>`)
-              .openPopup();
-          } else {
-            console.error("Map reference is not available");
+          // Remove existing search marker if any
+          if (markerRef.current) {
+            markerRef.current.remove();
           }
+          
+          // Add a marker at the found location
+          markerRef.current = L.marker([result.latitude, result.longitude])
+            .addTo(mapRef.current)
+            .bindPopup(`<b>${result.displayName}</b>`)
+            .openPopup();
         } else {
-          alert('No results found for the given address');
+          console.error("Map reference is not available");
         }
-      } catch (error) {
-        console.error('Error geocoding address:', error);
-        alert('Error finding the location. Please try again.');
+      } else {
+        alert('No results found for the given address');
       }
     }
+  };
+  
+  // Function to create event markers on map
+  const createEventMarkers = (eventsArray) => {
+    if (!mapRef.current) return;
+    
+    // Clear existing event markers
+    Object.values(markersRef.current).forEach(marker => {
+      marker.remove();
+    });
+    
+    // Reset markers object
+    markersRef.current = {};
+    
+    // Create new markers for each event
+    eventsArray.forEach(event => {
+      if (event.coordinates) {
+        const eventMarker = L.marker(event.coordinates)
+          .addTo(mapRef.current)
+          .bindPopup(`
+              <h3 style="margin: 0 0 8px; color: #4CAD4C;">${event.title}</h3>
+              <p style="margin: 4px 0;"><strong>📍 Location:</strong> ${event.location}</p>
+              <p style="margin: 4px 0;"><strong>🗓️ Date:</strong> ${event.date}</p>
+              <p style="margin: 4px 0;"><strong>👥 Volunteers:</strong> ${event.volunteers}</p>
+              <p style="margin: 4px 0;"><strong>❤️ Category:</strong> ${event.category}</p>
+          `);
+        
+        // Store marker reference with event id
+        markersRef.current[event.id] = eventMarker;
+      }
+    });
   };
   
   // Function to handle login redirect with current page as return URL
@@ -136,8 +175,8 @@ function App() {
     window.location.href = `${FLASK_URL}/?redirect_url=${returnUrl}`;
   };
   
-  // Function to handle form submission
-  const handleSubmit = (e) => {
+  // Function to handle form submission with geocoding
+  const handleSubmit = async (e) => {
     e.preventDefault();
     
     // Validate form
@@ -147,10 +186,21 @@ function App() {
       return;
     }
     
+    // Show loading state
+    // You could add a loading spinner here
+    
+    // Geocode the location
+    const geocodeResult = await geocodeAddress(formData.location);
+    
+    if (!geocodeResult) {
+      alert('Could not find coordinates for the provided location. Please enter a valid address.');
+      return;
+    }
+    
     // Generate a unique ID for the new event
     const newId = Date.now();
     
-    // Create the new event object
+    // Create the new event object with coordinates
     const newEvent = {
       id: newId,
       title: formData.title,
@@ -159,11 +209,23 @@ function App() {
       volunteers: formData.volunteers,
       category: getCategoryName(formData.category),
       description: formData.description,
-      isNew: true // Flag to mark this as a new event for animation
+      isNew: true, // Flag to mark this as a new event for animation
+      coordinates: [geocodeResult.latitude, geocodeResult.longitude]
     };
     
     // Add the new event to the beginning of the events array
-    setEvents([newEvent, ...events]);
+    const updatedEvents = [newEvent, ...events];
+    setEvents(updatedEvents);
+    
+    // Center map on new event location
+    if (mapRef.current) {
+      mapRef.current.setView([geocodeResult.latitude, geocodeResult.longitude], 15);
+    }
+    
+    // Update markers on the map
+    setTimeout(() => {
+      createEventMarkers(updatedEvents);
+    }, 100);
     
     // Set the new event ID for highlighting
     setNewEventId(newId);
@@ -223,6 +285,14 @@ function App() {
     return colors[Math.floor(Math.random() * colors.length)];
   };
   
+  // Function to handle view event from map popup
+  const handleViewEventFromMap = (eventId) => {
+    const event = events.find(e => e.id === eventId);
+    if (event) {
+      openViewPopup(event);
+    }
+  };
+  
   // Map initialization effect
   useEffect(() => {
     // Initialize map centered on NYC
@@ -235,6 +305,14 @@ function App() {
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; OpenStreetMap contributors'
     }).addTo(map);
+    
+    // Create event markers for initial events
+    createEventMarkers(events);
+    
+    // Add global function to handle clicking "View Details" in popup
+    window.viewEvent = (eventId) => {
+      handleViewEventFromMap(eventId);
+    };
     
     const resizeObserver = new ResizeObserver(() => {
       map.invalidateSize();
@@ -250,8 +328,15 @@ function App() {
       if (mapElement) {
         resizeObserver.disconnect();
       }
+      // Clean up global function
+      delete window.viewEvent;
     };
-  }, []);
+  }, []); // Empty dependency array for initial setup
+  
+  // Update markers when events change
+  useEffect(() => {
+    createEventMarkers(events);
+  }, [events]);
   
   return (
     <div className='layout-a'>
@@ -290,6 +375,16 @@ function App() {
               <div 
                 className={`event-list-item ${event.isNew ? 'new-event' : ''}`} 
                 key={event.id}
+                onClick={() => {
+                  // Center map on this event's location and open popup
+                  if (event.coordinates && mapRef.current) {
+                    mapRef.current.setView(event.coordinates, 15);
+                    const marker = markersRef.current[event.id];
+                    if (marker) {
+                      marker.openPopup();
+                    }
+                  }
+                }}
               >
                 {/* Add new badge and confetti for new events */}
                 {event.isNew && (
@@ -331,7 +426,10 @@ function App() {
                     <span className="icon">❤️ </span> {event.category}
                   </div>
                 </div>
-                <button onClick={() => openViewPopup(event)}>View</button>
+                <button onClick={(e) => {
+                  e.stopPropagation(); // Prevent triggering parent onClick
+                  openViewPopup(event);
+                }}>View</button>
               </div>
             ))}
           </div>
@@ -374,7 +472,7 @@ function App() {
                     id="event-location" 
                     value={formData.location}
                     onChange={handleInputChange}
-                    placeholder="Where will the event take place?" 
+                    placeholder="Enter a valid address (will be geocoded)" 
                     required
                   />
                 </div>
@@ -436,9 +534,11 @@ function App() {
               
               <div className="map-selection">
                 <h3 style={{ margin: '0 0 8px', fontSize: '1.05rem', fontWeight: '600', color: '#7A6C36' }}>
-                  Select Location on Map
+                  Location Information
                 </h3>
-                <p className="map-hint">Click on the map to pin the exact event location</p>
+                <p className="map-hint">
+                  Please enter a valid address above. The location will be automatically geocoded and marked on the map.
+                </p>
               </div>
             
               <div className="form-actions">
@@ -486,8 +586,9 @@ function App() {
                   <p style={{ margin: 0, lineHeight: 1.6 }}>{selectedEvent.description || "No description provided."}</p>
                 </div>
               )}
+              
               <button className="join-button">
-                Join This Event
+                <Link to="/Team" >Join the Match</Link>
               </button>
             </div>
           </div>
