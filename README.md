@@ -73,14 +73,12 @@ By connecting passionate individuals to actionable causes, EcoVolunteer makes di
 - Synchronized interaction between map and sidebar
 - Visual feedback on selection
 - Clean mobile and desktop layouts
-- 
 ---
 
 ## 👥 Community-Driven Features
 
 - **Team Challenges**: Create/join groups for eco-challenges (e.g. “City Cleanup Squad”)
-- **Event Seeds**: Users propose ideas like “Plant 100 trees,” matched with organizers
-- **Eco-Forums**: Community discussions on sustainability, DIY projects, or policy advocacy
+- **GoodHub-Forums**: Community discussions on sustainability, DIY projects, or policy advocacy
 ---
 
 
