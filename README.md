@@ -18,7 +18,7 @@ GoodHub aims to:
 ## 🌟 Vision & Social Impact
 
 GoodHub addresses critical gaps in environmental activism:
-![EcoVolunteer Map View](./Screenshot 2025-05-03 013350.png)
+![EcoVolunteer Map View](./s1.png)
 
 - Difficulty locating local volunteer opportunities
 - Lack of centralized platforms for sustainability efforts
