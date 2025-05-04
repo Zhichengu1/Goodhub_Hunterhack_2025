@@ -42,7 +42,6 @@ By connecting passionate individuals to actionable causes, EcoVolunteer makes di
 ## ⚙️ Core Features 
 
 ### 🗺️ Interactive Map Interface
-![GoodHub Map View](./s5.png)
 
 - Map shows dynamic pins for volunteer events
 - Zoom, pan, and custom pin icons by event type
@@ -69,6 +68,7 @@ By connecting passionate individuals to actionable causes, EcoVolunteer makes di
 - Clean mobile and desktop layouts
 
 ---
+![GoodHub Map View](./s5.png)
 
 ## 👥 Community-Driven Features
 
