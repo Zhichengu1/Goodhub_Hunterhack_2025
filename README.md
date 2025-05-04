@@ -18,7 +18,6 @@ GoodHub aims to:
 ## 🌟 Vision & Social Impact
 
 GoodHub addresses critical gaps in environmental activism:
-![GoodHub Map View](./s5.png)
 
 - Difficulty locating local volunteer opportunities
 - Lack of centralized platforms for sustainability efforts
@@ -43,6 +42,8 @@ By connecting passionate individuals to actionable causes, EcoVolunteer makes di
 ## ⚙️ Core Features 
 
 ### 🗺️ Interactive Map Interface
+![GoodHub Map View](./s5.png)
+
 - Map shows dynamic pins for volunteer events
 - Zoom, pan, and custom pin icons by event type
 - Pin highlights when corresponding event card is selected
