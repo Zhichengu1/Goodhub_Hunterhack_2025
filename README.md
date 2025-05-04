@@ -126,5 +126,4 @@ By connecting passionate individuals to actionable causes, EcoVolunteer makes di
 
 ---
 
-## 🏗️ System Architecture
 
