@@ -139,5 +139,5 @@ def logout():
     return response
 
 if __name__ == '__main__':
-    # Make sure to run on 0.0.0.0 to make it accessible from other devices
+    # Make server post of 5000
     app.run(debug=True, host='0.0.0.0', port=5000)
