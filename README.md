@@ -95,7 +95,7 @@ By connecting passionate individuals to actionable causes, EcoVolunteer makes di
 ---
 
 ## 🧑‍💼 Backend Page
-![GoodHub Daily_Challenge View](./s5.png)
+![GoodHub Daily_Challenge View](./s3.png)
 
 
 ### 📱 Mobile View
