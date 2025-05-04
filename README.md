@@ -39,7 +39,7 @@ By connecting passionate individuals to actionable causes, EcoVolunteer makes di
 
 ---
 
-## ⚙️ Core Features (Page 1 - Assigned: YZC)
+## ⚙️ Core Features 
 
 ### 🗺️ Interactive Map Interface
 - Map shows dynamic pins for volunteer events
