@@ -1,51 +1,122 @@
-# Hunter Hack 2025
-# GoodHub - Connecting Environmental Volunteers with Local Action
+# 🌱 GoodHub
 
-![GoodHub Logo](https://placeholder.co/150x150)
+GoodHub is a web application designed to connect environmentally conscious individuals with local volunteer opportunities. The platform empowers users to discover, join, and create sustainability-focused events through an intuitive, interactive map interface.
 
-## Sustainability, Simplified.
+---
 
-GoodHub is an interactive platform that bridges the gap between environmental volunteers and local cleanup initiatives. Our map-based interface makes finding, joining, and creating environmental activities simple and engaging.
+## 🌍 Project Overview
 
-## 🌿 Features
+GoodHub aims to:
 
-- **Interactive Map**: Discover volunteer opportunities near you through our intuitive map interface
-- **Simple Event Creation**: Create and publish environmental events with just a few clicks
-- **Location-Based Search**: Find activities based on address or ZIP code
-- **Category Filters**: Browse events by environmental focus (Conservation, Cleanup, Waste Management, Wildlife)
-- **Volunteer Management**: Specify and track volunteer needs for each initiative
-- **Daily Challenges**: Stay engaged with regular environmental activities and build ongoing impact
-- **Responsive Design**: Works seamlessly across desktop and mobile devices
+- Promote environmental sustainability and community engagement.
+- Centralize eco-volunteering opportunities for easier access.
+- Improve visibility for grassroots environmental initiatives.
+- Provide tools for individuals and groups to take actionable steps.
 
-## 🌎 Solving Real Environmental Challenges
+---
 
-GoodHub addresses critical environmental volunteering gaps:
+## 🌟 Vision & Social Impact
 
-- **Fragmented volunteer opportunities** - Centralizes environmental initiatives on one platform
-- **Geographic disconnects** - Matches volunteers with nearby opportunities through map visualization
-- **Coordination challenges** - Simplifies organization of environmental events
-- **Visibility for grassroots initiatives** - Amplifies local environmental efforts
-- **Volunteer engagement** - Gamifies participation with features like Daily Challenges
-- **Community building** - Creates networks of environmentally conscious citizens
+GoodHub addresses critical gaps in environmental activism:
 
-## 🗽 NYC Environmental Impact
+- Difficulty locating local volunteer opportunities
+- Lack of centralized platforms for sustainability efforts
+- Limited visibility for community-led initiatives
+- Low community participation due to lack of accessibility
 
-New York City faces significant environmental challenges that GoodHub helps address:
+By connecting passionate individuals to actionable causes, EcoVolunteer makes direct environmental impact more accessible and collaborative.
 
-- Only **17% of residential waste** is currently recycled
-- NYC Harbor receives about **40 tons of plastic waste** annually
-- The city has **22.5% tree canopy cover**, below the recommended 30%
-- About **1.1 million New Yorkers** live more than a 10-minute walk from a park
-- Combined sewer overflows release approximately **20 billion gallons of untreated water** yearly
-- Heat-vulnerable communities need approximately **150,000 new trees** to achieve equitable coverage
+---
 
-## 🚀 Getting Started
+## 🛠️ Tech Stack
 
-### Prerequisites
-- Node.js (v14 or higher)
-- npm or yarn
-- A modern web browser
+- **Frontend**: React.js
+- **Backend/Storage**: Python, SQL
+- **Map Integration**: Leaflet API
+- **Languages**: JavaScript, HTML, CSS
+- **State Management**: React Context API / Redux
+- **Responsive Design**: Media queries and viewport-based layout adjustments
 
-### Installation
+---
 
-1. Clone the repository
+## ⚙️ Core Features (Page 1 - Assigned: YZC)
+
+### 🗺️ Interactive Map Interface
+- Map shows dynamic pins for volunteer events
+- Zoom, pan, and custom pin icons by event type
+- Pin highlights when corresponding event card is selected
+
+### 📋 Event Sidebar
+- Collapsible sidebar with a searchable list of events
+- Event preview cards with key info
+- Create Event button
+
+### 📌 Event Management
+- View detailed event pop-ups via modal
+- Submit new events via event creation form
+- Register for participation
+- Filter by date, type, and location
+- SQL-based event storage (add/remove with pin sync)
+
+### 🔍 Search Bar
+- Search events and display matching results dynamically in sidebar or map
+
+### 🧭 User Experience Highlights
+- Synchronized interaction between map and sidebar
+- Visual feedback on selection
+- Clean mobile and desktop layouts
+
+---
+
+## 👥 Community-Driven Features
+
+- **Team Challenges**: Create/join groups for eco-challenges (e.g. “City Cleanup Squad”)
+- **Event Seeds**: Users propose ideas like “Plant 100 trees,” matched with organizers
+- **Eco-Forums**: Community discussions on sustainability, DIY projects, or policy advocacy
+
+---
+
+## 🧑‍🤝‍🧑 Team Discovery (Page 2 - Assigned: Patrick)
+
+### 💬 Group Post Flashcards
+- **Title**: Event name
+- **Description**: Event details
+- **Join Button**: Request contact info from the group owner
+- **Dynamic Display**: Shows current active members
+- Flashcards auto-remove when full
+- Scrollable layout with limited card size
+
+---
+
+## 🧑‍💼 User Profile (Page 3)
+
+### 📱 Mobile View
+- Profile info stacked vertically
+- Hosted & joined events listed in full-width cards
+
+### 💻 Tablet/Desktop View
+- Horizontal profile header layout
+- Two-column layout for events
+- Consistent card sizing
+
+---
+
+## 📱 Responsive Design Approach
+
+### Mobile
+- Full-width map with collapsible sidebar
+- Stacked event cards
+- Modal uses most of the screen
+
+### Tablet
+- Split layout: 60% map / 40% sidebar
+- Scrollable event cards
+
+### Desktop
+- 70% map / 30% sidebar
+- Multi-column card display (if space allows)
+
+---
+
+## 🏗️ System Architecture
+
