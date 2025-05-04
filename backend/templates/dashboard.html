@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GoodHub - Dashboard</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      transition: all 0.2s ease;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+    
+    header {
+      background-color: #4CAF50;
+      padding: 12px 24px;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .logo {
+      font-weight: bold;
+      font-size: 22px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .logo-icon {
+      margin-right: 8px;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 18px;
+      padding: 6px 10px;
+      border-radius: 4px;
+    }
+    
+    nav a:hover {
+      background-color: rgba(255,255,255,0.2);
+      transform: translateY(-2px);
+    }
+    
+    .main-container {
+      display: flex;
+      min-height: calc(100vh - 60px);
+    }
+    
+    .sidebar {
+      width: 250px;
+      padding: 25px;
+      border-right: 1px solid #eee;
+      background-color: white;
+      box-shadow: 2px 0 5px rgba(0,0,0,0.03);
+    }
+    
+    .user-info {
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .user-avatar {
+      font-size: 20px;
+      margin-right: 8px;
+    }
+    
+    .username {
+      font-weight: bold;
+      font-size: 18px;
+    }
+    
+    .sidebar-menu {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .sidebar-menu li {
+      margin-bottom: 12px;
+    }
+    
+    .sidebar-menu a {
+      text-decoration: none;
+      color: #333;
+      display: block;
+      padding: 8px 10px;
+      border-radius: 4px;
+      transition: transform 0.2s, background-color 0.2s;
+    }
+    
+    .sidebar-menu a:hover {
+      color: #4CAF50;
+      background-color: #f5f5f5;
+      transform: translateX(5px);
+    }
+    
+    .sidebar-menu a.active {
+      color: #4CAF50;
+      font-weight: bold;
+      background-color: #e8f5e9;
+    }
+    
+    .sidebar-menu a i {
+      margin-right: 10px;
+      width: 20px;
+      text-align: center;
+    }
+    
+    .interests-section {
+      margin-top: 30px;
+    }
+    
+    .interests-title {
+      font-weight: bold;
+      color: #777;
+      margin-bottom: 12px;
+    }
+    
+    .interests-list div {
+      padding: 5px 0;
+      position: relative;
+      cursor: pointer;
+    }
+    
+    .interests-list div:hover {
+      color: #4CAF50;
+      transform: translateX(5px);
+    }
+    
+    .interests-list div::before {
+      content: "•";
+      color: #4CAF50;
+      margin-right: 8px;
+    }
+    
+    .content-area {
+      flex: 1;
+      padding: 25px;
+      background-color: #f9f9f9;
+    }
+    
+    .search-bar {
+      margin-bottom: 25px;
+      display: flex;
+      max-width: 500px;
+    }
+    
+    .search-bar input {
+      padding: 10px 15px;
+      width: 100%;
+      border: 1px solid #ddd;
+      border-radius: 25px;
+      font-size: 15px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    
+    .search-bar input:focus {
+      outline: none;
+      border-color: #4CAF50;
+      box-shadow: 0 2px 10px rgba(76,175,80,0.2);
+    }
+    
+    .search-button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      margin-left: -40px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s;
+    }
+    
+    .search-button:hover {
+      transform: scale(1.1);
+    }
+    
+    .welcome-section {
+      margin-bottom: 30px;
+      padding: 25px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      transform: translateY(0);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .welcome-section:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .welcome-section h1 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      color: #333;
+    }
+    
+    .welcome-subtitle {
+      color: #666;
+      margin-bottom: 15px;
+    }
+    
+    .datetime-container {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 15px;
+      padding-top: 15px;
+      border-top: 1px solid #eee;
+    }
+    
+    #current-time {
+      font-size: 22px;
+      font-weight: bold;
+      color: #4CAF50;
+    }
+    
+    #current-date {
+      color: #666;
+    }
+    
+    .events-section {
+      margin-bottom: 30px;
+    }
+    
+    .section-title {
+      margin-bottom: 20px;
+      font-size: 18px;
+      color: #555;
+      font-weight: 500;
+    }
+    
+    .event-card {
+      background-color: white;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .event-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    
+    .event-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 5px;
+      height: 100%;
+      background-color: #4CAF50;
+    }
+    
+    .event-title {
+      font-weight: bold;
+      font-size: 18px;
+      margin-bottom: 15px;
+      color: #333;
+    }
+    
+    .event-detail {
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .event-detail i {
+      margin-right: 10px;
+      width: 20px;
+    }
+    
+    .view-link {
+      display: inline-block;
+      background-color: #4CAF50;
+      color: white;
+      padding: 8px 15px;
+      text-decoration: none;
+      border-radius: 4px;
+      margin-top: 15px;
+      transition: background-color 0.2s, transform 0.2s;
+    }
+    
+    .view-link:hover {
+      background-color: #45a049;
+      transform: scale(1.05);
+    }
+    
+    .map-controls {
+      display: flex;
+      margin-bottom: 20px;
+    }
+    
+    .map-control-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 50%;
+      margin-right: 10px;
+      cursor: pointer;
+      transition: transform 0.2s, background-color 0.2s;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    }
+    
+    .map-control-button:hover {
+      transform: scale(1.1);
+      background-color: #f5f5f5;
+    }
+    
+    .create-event {
+      display: inline-flex;
+      align-items: center;
+      color: white;
+      background-color: #4CAF50;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 30px;
+      box-shadow: 0 4px 10px rgba(76,175,80,0.3);
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .create-event:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 6px 15px rgba(76,175,80,0.4);
+    }
+    
+    .create-event i {
+      margin-right: 8px;
+    }
+    
+    .attribution {
+      margin-top: 30px;
+      font-size: 12px;
+      color: #999;
+      text-align: center;
+    }
+    
+    /* Return to app button styling */
+    .return-to-app {
+      display: inline-block;
+      background: linear-gradient(145deg, #4CAF50, #45a049);
+      color: white;
+      text-decoration: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      margin: 20px 0;
+      box-shadow: 0 4px 10px rgba(76,175,80,0.3);
+      transition: all 0.3s ease;
+    }
+    
+    .return-to-app:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 15px rgba(76,175,80,0.4);
+    }
+    
+    .return-to-app:active {
+      transform: translateY(-1px);
+      box-shadow: 0 3px 8px rgba(76,175,80,0.3);
+    }
+    
+    @media (max-width: 768px) {
+      .main-container {
+        flex-direction: column;
+      }
+      
+      .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #eee;
+      }
+      
+      .welcome-section {
+        padding: 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <span class="logo-icon"></span> GoodHub
+    </div>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Daily Challenge</a>
+      <a href="/logout{% if redirect_url %}?redirect_url={{ redirect_url }}{% endif %}">Logout</a>
+    </nav>
+  </header>
+  
+  <div class="main-container">
+    <div class="sidebar">
+      <div class="user-info">
+        <span class="user-avatar">👤</span>
+        <span class="username">{{ username }}</span>
+        <div>Volunteer</div>
+      </div>
+      
+      <!-- Display Return to App button if redirect_url exists -->
+      {% if redirect_url %}
+      <a href="{{ redirect_url }}" class="return-to-app">
+        Return to App
+      </a>
+      {% endif %}
+      
+      <ul class="sidebar-menu">
+        <li><a href="#" class="active"><span>🏠</span> Dashboard</a></li>
+        <li><a href="#"><span>📅</span> My Events</a></li>
+        <li><a href="#"><span>👥</span> My Teams</a></li>
+        <li><a href="#"><span>⭐</span> My Rewards</a></li>
+        <li><a href="#"><span>🕒</span> History</a></li>
+        <li><a href="#"><span>⚙️</span> Settings</a></li>
+      </ul>
+      
+      <div class="interests-section">
+        <div class="interests-title"></div>
+      </div>
+    </div>
+    
+    <div class="content-area">
+      <div class="search-bar">
+        <input type="text" placeholder="Search for volunteer opportunities">
+        <button class="search-button">🔍</button>
+      </div>
+      
+      <div class="welcome-section">
+        <h1>Welcome back, {{ username }}!</h1>
+        <div class="welcome-subtitle">Find volunteer opportunities near you</div>
+        
+        <div class="datetime-container">
+          <div id="current-time">02:21</div>
+          <div id="current-date">Saturday, May 3, 2025</div>
+        </div>
+      </div>
+      
+      <div class="map-controls">
+        <div class="map-control-button">+</div>
+        <div class="map-control-button">-</div>
+        <div class="map-control-button">⊕</div>
+      </div>
+      
+      <div class="events-section">
+        <h2 class="section-title">Upcoming Events</h2>
+        
+        <div class="event-card">
+          <div class="event-title">Downtown Community Park</div>
+          <div class="event-detail"><span>📅</span> May 15, 2025</div>
+          <div class="event-detail"><span>👥</span> 12 volunteers needed</div>
+          <div class="event-detail"><span>❤️</span> Envirment & conservation</div>
+          <a href="#" class="view-link">View</a>
+        </div>
+      
+      <a href="#" class="create-event"><span>➕</span> Create Event</a>
+      
+      <div class="attribution">© OpenStreetMap contributors</div>
+    </div>
+  </div>
+  
+  <script>
+    // Update time and date
+    function updateDateTime() {
+      const now = new Date();
+      
+      // Update time
+      const hours = now.getHours().toString().padStart(2, '0');
+      const minutes = now.getMinutes().toString().padStart(2, '0');
+      document.getElementById('current-time').textContent = `${hours}:${minutes}`;
+      
+      // Update date
+      const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+      const dateStr = now.toLocaleDateString('en-US', options);
+      document.getElementById('current-date').textContent = dateStr;
+    }
+    
+    // Initialize
+    updateDateTime();
+    
+    // Update time every minute
+    setInterval(updateDateTime, 60000);
+    
+    // Add hover animations to sidebar menu
+    document.querySelectorAll('.sidebar-menu a').forEach(item => {
+      item.addEventListener('mouseenter', function() {
+        this.style.transition = 'transform 0.3s, background-color 0.3s';
+        this.style.transform = 'translateX(5px)';
+      });
+      
+      item.addEventListener('mouseleave', function() {
+        if (!this.classList.contains('active')) {
+          this.style.transform = 'translateX(0)';
+        }
+      });
+    });
+    
+    // Add hover animations to event cards
+    document.querySelectorAll('.event-card').forEach(card => {
+      card.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateY(-5px)';
+        this.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+      });
+      
+      card.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateY(0)';
+        this.style.boxShadow = '0 2px 10px rgba(0,0,0,0.05)';
+      });
+    });
+    
+    // Add hover animations to interest items
+    document.querySelectorAll('.interests-list div').forEach(item => {
+      item.addEventListener('mouseenter', function() {
+        this.style.transition = 'transform 0.3s, color 0.3s';
+        this.style.transform = 'translateX(5px)';
+        this.style.color = '#4CAF50';
+      });
+      
+      item.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateX(0)';
+        this.style.color = '';
+      });
+    });
+  </script>
+</body>
+</html>

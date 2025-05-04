@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GoodHub - Register</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    
+    body {
+      background-color: #f5f7fa;
+      min-height: 100vh;
+    }
+    
+    .navbar {
+      background-color: #4CAF50;
+      color: white;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .logo {
+      font-size: 1.6rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+    }
+    
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      transition: background-color 0.3s;
+    }
+    
+    .nav-links a:hover {
+      background-color: rgba(255,255,255,0.2);
+    }
+    
+    .container {
+      display: flex;
+      height: calc(100vh - 60px);
+    }
+    
+    .map-container {
+      flex: 1;
+      background: url('https://a.tile.openstreetmap.org/12/1206/1539.png') center center;
+      background-size: cover;
+      position: relative;
+    }
+    
+    .map-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .register-container {
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      width: 450px;
+      max-width: 90%;
+      padding: 40px;
+      position: relative;
+    }
+    
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 30px;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      color: #555;
+    }
+    
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      background-color: #f7f7f7;
+      border-radius: 5px;
+      font-size: 16px;
+      transition: border-color 0.3s ease;
+    }
+    
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+      border-color: #4CAF50;
+      outline: none;
+    }
+    
+    .btn {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 12px 15px;
+      border-radius: 5px;
+      width: 100%;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    
+    .btn:hover {
+      background-color: #3e8e41;
+    }
+    
+    .links {
+      text-align: center;
+      margin-top: 20px;
+    }
+    
+    .links a {
+      color: #4CAF50;
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.3s ease;
+    }
+    
+    .links a:hover {
+      text-decoration: underline;
+    }
+    
+    .password-requirements {
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #f8f9fa;
+      border-radius: 5px;
+      border-left: 3px solid #4CAF50;
+    }
+    
+    .password-requirements p {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 5px;
+    }
+    
+    .password-requirements ul {
+      padding-left: 20px;
+      font-size: 12px;
+      color: #666;
+    }
+    
+    .password-match-error {
+      color: #e74c3c;
+      font-size: 12px;
+      margin-top: 5px;
+      display: none;
+    }
+    
+    .categories {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .category {
+      background-color: #4CAF50;
+      color: white;
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 14px;
+    }
+    
+    .error-message {
+      color: #e74c3c;
+      margin-top: 15px;
+      text-align: center;
+      display: none;
+    }
+    
+    .leaflet-attribution {
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+      font-size: 10px;
+      color: white;
+      background-color: rgba(0,0,0,0.5);
+      padding: 3px 5px;
+      border-radius: 3px;
+    }
+    
+    .leaflet-attribution a {
+      color: #ddd;
+    }
+    
+    /* Redirect notice styling */
+    .redirect-notice {
+      background-color: #f8f9fa;
+      border-left: 4px solid #4CAF50;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 5px;
+      font-size: 14px;
+      color: #555;
+    }
+    
+    .redirect-notice p {
+      margin: 0 0 5px 0;
+    }
+    
+    .redirect-url {
+      font-size: 12px;
+      color: #777;
+      word-break: break-all;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="logo">
+      GoodHub
+    </div>
+    <div class="nav-links">
+      <a href="#">Home</a>
+      <a href="#">FindTeam</a>
+      <a href="/">Login</a>
+    </div>
+  </nav>
+  
+  <div class="container">
+    <div class="map-container">
+      <div class="map-overlay">
+        <div class="register-container">
+          <h1>Join GoodHub Community</h1>
+          
+          <!-- Show redirect notice if redirect_url is present -->
+          {% if redirect_url %}
+          <div class="redirect-notice">
+            <p>After registration, you'll be redirected to login and then to:</p>
+            <p class="redirect-url">{{ redirect_url }}</p>
+          </div>
+          {% endif %}
+          
+          <form action="/register" method="post">
+            <div class="form-group">
+              <label for="username">Username</label>
+              <input type="text" id="username" name="username" placeholder="Choose a username" required>
+            </div>
+
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" id="password" name="password" placeholder="Choose a password" required>
+            </div>
+
+            <div class="form-group">
+              <label for="confirm_password">Confirm Password</label>
+              <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm your password" required oninput="checkPasswordMatch()">
+              <div id="password-match-error" class="password-match-error">
+                Passwords do not match
+              </div>
+            </div>
+            
+            <!-- Hidden field to store redirect URL -->
+            <input type="hidden" id="redirect_url" name="redirect_url" value="{{ redirect_url }}">
+            
+            <button type="submit" class="btn" id="submit-btn">Create Account</button>
+            
+            <div class="links">
+              <a href="/?{% if redirect_url %}redirect_url={{ redirect_url }}{% endif %}">Already have an account? Login</a>
+            </div>
+            
+            <div id="error-message" class="error-message"></div>
+            
+            <div class="categories">
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="leaflet-attribution">© OpenStreetMap contributors</div>
+    </div>
+  </div>
+  
+  <script>
+    // Check for password match
+    function checkPasswordMatch() {
+      const password = document.querySelector('input[name="password"]').value;
+      const confirmPassword = document.querySelector('input[name="confirm_password"]').value;
+      const errorElement = document.getElementById('password-match-error');
+      const submitButton = document.getElementById('submit-btn');
+      
+      if (password !== confirmPassword) {
+        errorElement.style.display = 'block';
+        submitButton.disabled = true;
+      } else {
+        errorElement.style.display = 'none';
+        submitButton.disabled = false;
+      }
+    }
+    
+    // Check URL parameters for error messages and redirect URL
+    window.onload = function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const error = urlParams.get('error');
+      const redirectUrl = urlParams.get('redirect_url');
+      const errorMessageDiv = document.getElementById('error-message');
+      const redirectUrlInput = document.getElementById('redirect_url');
+      
+      // Set the redirect URL in hidden field if it exists in URL parameters
+      if (redirectUrl) {
+        redirectUrlInput.value = redirectUrl;
+        
+        // Update the login link to include the redirect URL
+        const loginLink = document.querySelector('.links a');
+        if (loginLink) {
+          loginLink.href = `/?redirect_url=${encodeURIComponent(redirectUrl)}`;
+        }
+      }
+      
+      if (error === 'exists') {
+        errorMessageDiv.innerText = 'Username already exists. Please choose another one.';
+        errorMessageDiv.style.display = 'block';
+      }
+    }
+  </script>
+</body>
+</html>
