@@ -61,6 +61,9 @@ By connecting passionate individuals to actionable causes, EcoVolunteer makes di
 - Filter by date, type, and location
 - SQL-based event storage (add/remove with pin sync)
 
+![GoodHub Map View](./s2.png)
+
+
 ### 🔍 Search Bar
 - Search events and display matching results dynamically in sidebar or map
 
