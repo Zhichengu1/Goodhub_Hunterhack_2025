@@ -1,6 +1,6 @@
 # 🌱 GoodHub
 
-GoodHub is a web application designed to connect environmentally conscious individuals with local volunteer opportunities. The platform empowers users to discover, join, and create sustainability-focused events through an intuitive, interactive map interface.
+GoodHub is a web application designed to connect environmentally conscious individuals with local and global volunteer opportunities. The platform empowers users to discover, join, and create sustainability-focused events through an intuitive, interactive map interface.
 
 ---
 
@@ -76,9 +76,9 @@ By connecting passionate individuals to actionable causes, EcoVolunteer makes di
 
 ---
 
-## 🧑‍🤝‍🧑 Team Discovery (Page 2 - Assigned: Patrick)
+## 🧑‍🤝‍🧑 Daily Challenge
 
-### 💬 Group Post Flashcards
+### 💬 Challenge Post Flashcards
 - **Title**: Event name
 - **Description**: Event details
 - **Join Button**: Request contact info from the group owner
@@ -88,7 +88,7 @@ By connecting passionate individuals to actionable causes, EcoVolunteer makes di
 
 ---
 
-## 🧑‍💼 User Profile (Page 3)
+## 🧑‍💼 User Profile 
 
 ### 📱 Mobile View
 - Profile info stacked vertically
