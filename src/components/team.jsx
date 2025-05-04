@@ -15,7 +15,7 @@ function Team() {  // Capitalized function name
     },
     {
       key: 2,
-      title: "Food Bank Volunteering",
+      title: "Food Bank ",
       description: "Assist with sorting and distributing food to families in need.",
       date: "2025-05-15",
       capacity: 20,
@@ -23,8 +23,8 @@ function Team() {  // Capitalized function name
     },
     {
       key: 3,
-      title: "Tutoring Underprivileged Students",
-      description: "Provide academic support in math and English for local youth.",
+      title: "Tutoring  Students",
+      description: "Provide academic support in environment and math for local youth.",
       date: "2025-05-18",
       capacity: 10,
       joined: 5,
@@ -47,7 +47,7 @@ function Team() {  // Capitalized function name
     },
     {
       key: 6,
-      title: "Food Bank Volunteering",
+      title: "Food Distribution",
       description: "Assist with sorting and distributing food to families in need.",
       date: "2025-05-24",
       capacity: 15,
@@ -90,7 +90,7 @@ function Team() {  // Capitalized function name
         <div className="team-nav-buttons">
           <button onClick={() => setShowForm(true)}>Add</button>
           <button>Home</button>
-          <button>FindTeam</button>
+          <button>Daily Challenge</button>
           <button>Login</button>
           <button></button>
           <button></button>

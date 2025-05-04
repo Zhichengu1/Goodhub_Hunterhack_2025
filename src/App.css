@@ -31,28 +31,65 @@ html, body {
   color: white;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-weight: bold;
+  padding-left: 10px;
 }
 
 .nav-btn {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 12px;
+  padding-right: 15px;
 }
 
 .nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   color: white;
-  padding: 8px 12px;
-  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.15);
+  padding: 8px 16px;
+  border-radius: 18px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-weight: 500;
-  transition: background-color 0.2s;
-  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  text-decoration: none;
+  border: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.nav-item::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.7s ease;
+  z-index: -1;
 }
 
 .nav-item:hover {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.25);
+  transform: translateY(-3px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: white;
 }
+
+.nav-item:hover::before {
+  left: 100%;
+}
+
+.nav-item:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
 
 .flex-container {
   display: flex;
@@ -364,7 +401,8 @@ a {
 .form-group {
   display: flex;
   flex-direction: column;
-  margin-bottom: 20px;
+  padding: 0;
+  margin-bottom: 15px;
 }
 
 .form-row {

@@ -12,11 +12,11 @@ function App() {
   const [events, setEvents] = useState([
     {
       id: 1,
-      title: "Community Cleanup",
-      location: "Downtown Community Park",
-      name: "dj",
-      date: "May 15, 2025",
-      volunteers: 12,
+      title: "GoodHub Admin Demo",
+      location: "Hunter College",
+      name: "Patrick Luo",
+      date: "May 3, 2025",
+      volunteers: 4,
       category: "Education & Youth",
       isNew: false,
       coordinates: [40.7128, -74.0060] // Default coordinates for initial event
@@ -161,7 +161,6 @@ function App() {
               <p style="margin: 4px 0;"><strong>❤️ Category:</strong> ${event.category}</p>
           `);
         
-        // Store marker reference with event id
         markersRef.current[event.id] = eventMarker;
       }
     });
@@ -266,10 +265,10 @@ function App() {
   
   const getCategoryName = (categoryValue) => {
     const categories = {
-      'education': 'Education & Youth',
-      'health': 'Health & Wellness',
-      'environment': 'Environment & Conservation',
-      'arts': 'Arts & Culture'
+      'education': 'Environment & Conservation',
+      'health': 'Street & City Cleanup',
+      'environment': 'Trash & Plastic',
+      'arts': 'Pet & WildLife'
     };
     return categories[categoryValue] || categoryValue;
   };
@@ -344,7 +343,7 @@ function App() {
         <div className="title">GoodHub</div>
         <div className="nav-btn">
           <Link to="/" className="nav-item">Home</Link>
-          <Link to="/Team" className="nav-item">FindTeam</Link>
+          <Link to="/Team" className="nav-item">Daily Challenge</Link>
           {/* Replace static login div with a clickable div that redirects */}
           <div className="nav-item" onClick={handleLoginRedirect} style={{cursor: 'pointer'}}>Login</div>
         </div>
@@ -363,10 +362,10 @@ function App() {
             onKeyDown={handleSearchKeyDown}
           />          
           <div className="category">
-            <div className="category-item">Education & Youth</div>
-            <div className="category-item">Health & Wellness</div>
             <div className="category-item">Environment & Conservation</div>
-            <div className="category-item">Arts & Culture</div>
+            <div className="category-item">Street & City Clean-up</div>
+            <div className="category-item">Trash & Plastic Waste</div>
+            <div className="category-item">Pets & Wildlife</div>
           </div>
           
           {/* Event List with New Event Animations */}
@@ -592,7 +591,7 @@ function App() {
               )}
               
               <button className="join-button">
-                <Link to="/Team" style={{ color: 'white', textDecoration: 'none', display: 'block', width: '100%' }}>Join the Match</Link>
+                <Link to="/Team" style={{ color: 'white', textDecoration: 'none', display: 'block', width: '100%' }}>Join the Challenge</Link>
               </button>
             </div>
           </div>
