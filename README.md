@@ -54,6 +54,9 @@ By connecting passionate individuals to actionable causes, EcoVolunteer makes di
 - Event preview cards with key info
 - Create Event button
 
+![GoodHub Map View](./s2.png)
+
+
 ### 📌 Event Management
 - View detailed event pop-ups via modal
 - Submit new events via event creation form
@@ -61,7 +64,6 @@ By connecting passionate individuals to actionable causes, EcoVolunteer makes di
 - Filter by date, type, and location
 - SQL-based event storage (add/remove with pin sync)
 
-![GoodHub Map View](./s2.png)
 
 
 ### 🔍 Search Bar
